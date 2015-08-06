@@ -8,6 +8,11 @@ output:
 
 ####Loading and preprocessing data
 
+```r
+act <- read.csv("activity.csv")
+library(tidyr)
+library(lattice)
+```
 
 ####What is the mean total number of steps taken per day?
 
@@ -19,7 +24,7 @@ hist(total$steps, xlab="Total steps per day", main="Histogram of Total Steps per
 ![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png) 
 
 ```r
-summary(total$steps)[3:4]
+summary(total$steps)[3:4] #Median and mean of total number of steps per day averaged across observation period
 ```
 
 ```
@@ -37,7 +42,7 @@ plot(average$interval, average$steps, type="l", ylab="Average no. of steps", xla
 ![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png) 
 
 ```r
-average$interval[which.max(average$steps)]
+average$interval[which.max(average$steps)] #Maximum steps in a day averaged across observation period
 ```
 
 ```
@@ -47,7 +52,7 @@ average$interval[which.max(average$steps)]
 ####Imputing missing values
 
 ```r
-nrow(act) - sum(complete.cases(act))
+nrow(act) - sum(complete.cases(act)) #Total number of rows with missing values
 ```
 
 ```
@@ -67,7 +72,7 @@ hist(imputed_total$steps, xlab="Total steps per day", main="Total Steps per Day 
 ![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png) 
 
 ```r
-summary(imputed_total$steps)[3:4]
+summary(imputed_total$steps)[3:4] #Median and mean of imputed total number of steps per day averaged across observation period
 ```
 
 ```

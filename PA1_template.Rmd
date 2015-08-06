@@ -7,9 +7,8 @@ output:
 
 
 ####Loading and preprocessing data
-```{r, echo=FALSE}
+```{r, echo=TRUE}
 act <- read.csv("activity.csv")
-library(lubridate)
 library(tidyr)
 library(lattice)
 ```
@@ -18,19 +17,19 @@ library(lattice)
 ```{r, echo=TRUE}
 total <- aggregate(steps ~ date, act, sum)
 hist(total$steps, xlab="Total steps per day", main="Histogram of Total Steps per Day")
-summary(total$steps)[3:4]
+summary(total$steps)[3:4] #Median and mean of total number of steps per day averaged across observation period
 ```
 
 ####What is the average daily activity pattern?
 ```{r, echo=TRUE}
 average <- aggregate(steps ~ interval, act, mean, na.rm=TRUE)
 plot(average$interval, average$steps, type="l", ylab="Average no. of steps", xlab="5-minute interval in a day", main="Average Steps Throughout a Day")
-average$interval[which.max(average$steps)]
+average$interval[which.max(average$steps)] #Maximum steps in a day averaged across observation period
 ```
 
 ####Imputing missing values
 ```{r, echo=TRUE}
-nrow(act) - sum(complete.cases(act))
+nrow(act) - sum(complete.cases(act)) #Total number of rows with missing values
 act2 <- spread(act, interval, steps, drop=FALSE)
 for (i in 2:ncol(act2)) {
   act2[,i] <- replace(act2[,i], which(is.na(act2[,i])), mean(act2[,2], na.rm=TRUE))
@@ -38,7 +37,7 @@ for (i in 2:ncol(act2)) {
 imputed <- gather(act2, interval, steps, -date)
 imputed_total <- aggregate(steps ~ date, imputed, sum)
 hist(imputed_total$steps, xlab="Total steps per day", main="Total Steps per Day (Imputed)")
-summary(imputed_total$steps)[3:4]
+summary(imputed_total$steps)[3:4] #Median and mean of imputed total number of steps per day averaged across observation period
 ```
 
 ####Are there differences in activity patterns between weekdays and weekends?
